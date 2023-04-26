@@ -14,7 +14,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 
-	"example.com/internal/movies"
+	"github.com/whiterthanwhite/aws_movies_practice/internal/movies"
 )
 
 func deleteMovie(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {

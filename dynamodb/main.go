@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 
-	"example.com/internal/movies"
+	"github.com/whiterthanwhite/aws_movies_practice/internal/movies"
 )
 
 func readMovies(fileName string) ([]movies.Movie, error) {

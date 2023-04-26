@@ -1,4 +1,4 @@
-module example.com
+module github.com/whiterthanwhite/aws_movies_practice
 
 go 1.20
 

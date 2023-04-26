@@ -15,7 +15,14 @@ import (
 )
 
 func findAll(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	size, err := strconv.Atoi(request.Headers["Count"])
+	count, ok := request.Headers["Count"]
+	if !ok {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusBadRequest,
+			Body:       "Header count doesn't exist",
+		}, nil
+	}
+	size, err := strconv.Atoi(count)
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,

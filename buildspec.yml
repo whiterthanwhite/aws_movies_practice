@@ -1,0 +1,28 @@
+version: 0.2
+env:
+  variables:
+    S3_BUCKET: "codepipeline-eu-north-1-879559965620"
+    PACKAGE: "github.com/whiterthanwhite/aws_movies_practice"
+
+phases:
+  install:
+    commands:
+      - mkdir /go/src/github.com/whiterthanwhite
+      - cd /go/src/github.com/whiterthanwhite
+      - git clone https://github.com/whiterthanwhite/aws_movies_practice.git
+
+  pre_build:
+    commands:
+      - cd "/go/src/${PACKAGE}"
+      - go vet ./...
+      - go test ./...
+
+  build:
+    commands:
+    - GOOS=linux GOARCH=amd64 go build -o ./findallmovies/main ./findallmovies/main.go
+    - zip -j ./findallmovies/$CODEBUILD_RESOLVED_SOURCE_VERSION.zip ./findallmovies/main
+    - aws s3 cp ./findallmovies/$CODEBUILD_RESOLVED_SOURCE_VERSION.zip s3://$S3_BUCKET/
+
+  post_build:
+    commands:
+      - aws lambda update-function-code --function-name FindAllMovies --s3-bucket $S3_BUCKET --s3-key $CODEBUILD_RESOLVED_SOURCE_VERSION.zip

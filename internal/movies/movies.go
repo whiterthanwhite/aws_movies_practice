@@ -1,5 +1,6 @@
 package movies
 
+// Movie entity
 type Movie struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
